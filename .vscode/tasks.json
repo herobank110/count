@@ -1,0 +1,24 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "gradle",
+      "id": "assembleDebug",
+      "script": "assembleDebug",
+      "description": "Assembles main output for variant debug",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "project": "count",
+      "buildFile": "${workspaceFolder}/build.gradle.kts",
+      "rootProject": "count",
+      "projectFolder": "${workspaceFolder}",
+      "workspaceFolder": "${workspaceFolder}",
+      "args": "",
+      "javaDebug": false,
+      "problemMatcher": ["$gradle"],
+      "label": "gradle: assembleDebug"
+    }
+  ]
+}
