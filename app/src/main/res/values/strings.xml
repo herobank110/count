@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">count</string>
+	<string name="app_name">
+		Count On It: Awesome Countdown Widgets
+	</string>
+	<string name="mywidget_appwidget_description">
+		A description of the widget
+	</string>
 </resources>
