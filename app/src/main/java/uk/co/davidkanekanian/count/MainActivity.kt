@@ -3,8 +3,6 @@ package uk.co.davidkanekanian.count
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.os.Bundle
-import android.content.ContentResolver
-import android.net.Uri
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -60,31 +58,9 @@ fun AnimalList(modifier: Modifier = Modifier) {
                                                 )
                                                 .setUsage(AudioAttributes.USAGE_GAME)
                                                 .build()
-                                        applicationContext,
-                                        Uri.Builder()
-                                                .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
-                                                .authority(
-                                                        resources
-                                                                .getResourcePackageName(R.raw.cow)
-                                                )
-                                                .appendPath(
-                                                        resources
-                                                                .getResourceTypeName(R.raw.cow)
-                                                )
-                                                .appendPath(
-                                                        resources
-                                                                .getResourceEntryName(R.raw.cow)
-                                                )
-                                                .build()
                                 )
                                 prepare()
                             }
-
-                    // getResources().openRawResourceFd(R.raw.cow).let {
-                    //     mediaPlayer.setDataSource(it.fileDescriptor)//, it.startOffset,
-                    // it.length)
-                    //     it.close()
-                    // }
                     mediaPlayer.start()
                 },
                 shape = CircleShape
