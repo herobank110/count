@@ -1,6 +1,6 @@
 package uk.co.davidkanekanian.count
 
-import android.media.AudioAttributes
+import android.content.Context
 import android.media.MediaPlayer
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -18,6 +18,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -43,28 +44,10 @@ fun App() {
 
 @Composable
 fun AnimalList(modifier: Modifier = Modifier) {
+    val context = LocalContext.current
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         Text(text = "Farm Animals")
-        TextButton(
-                onClick = {
-                    // play cow sound
-                    // var mediaPlayer = MediaPlayer.create(context, R.raw.sound_file_1)
-                    var mediaPlayer =
-                            MediaPlayer().apply {
-                                setAudioAttributes(
-                                        AudioAttributes.Builder()
-                                                .setContentType(
-                                                        AudioAttributes.CONTENT_TYPE_SONIFICATION
-                                                )
-                                                .setUsage(AudioAttributes.USAGE_GAME)
-                                                .build()
-                                )
-                                prepare()
-                            }
-                    mediaPlayer.start()
-                },
-                shape = CircleShape
-        ) {
+        TextButton(onClick = { playSound(context) }, shape = CircleShape) {
             Image(
                     painter = painterResource(id = R.drawable.cow),
                     contentDescription = "Cow",
@@ -72,4 +55,23 @@ fun AnimalList(modifier: Modifier = Modifier) {
             )
         }
     }
+}
+
+fun playSound(context: Context?) {
+    // simple version:
+    var mediaPlayer = MediaPlayer.create(context, R.raw.cow)
+    // complex version:
+    // var mediaPlayer =
+    //         MediaPlayer().apply {
+    //             setAudioAttributes(
+    //                     AudioAttributes.Builder()
+    //                             .setContentType(
+    //                                     AudioAttributes.CONTENT_TYPE_SONIFICATION
+    //                             )
+    //                             .setUsage(AudioAttributes.USAGE_GAME)
+    //                             .build()
+    //             )
+    //             prepare()
+    //         }
+    mediaPlayer.start()
 }
