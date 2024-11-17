@@ -1,7 +1,10 @@
 package uk.co.davidkanekanian.count
 
+import android.media.AudioAttributes
+import android.media.MediaPlayer
 import android.os.Bundle
-import android.util.Log
+import android.content.ContentResolver
+import android.net.Uri
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -10,7 +13,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -45,7 +47,48 @@ fun App() {
 fun AnimalList(modifier: Modifier = Modifier) {
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         Text(text = "Farm Animals")
-        TextButton(onClick = { Log.d("Count", "Button clicked") }, shape = CircleShape) {
+        TextButton(
+                onClick = {
+                    // play cow sound
+                    // var mediaPlayer = MediaPlayer.create(context, R.raw.sound_file_1)
+                    var mediaPlayer =
+                            MediaPlayer().apply {
+                                setAudioAttributes(
+                                        AudioAttributes.Builder()
+                                                .setContentType(
+                                                        AudioAttributes.CONTENT_TYPE_SONIFICATION
+                                                )
+                                                .setUsage(AudioAttributes.USAGE_GAME)
+                                                .build()
+                                        applicationContext,
+                                        Uri.Builder()
+                                                .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
+                                                .authority(
+                                                        resources
+                                                                .getResourcePackageName(R.raw.cow)
+                                                )
+                                                .appendPath(
+                                                        resources
+                                                                .getResourceTypeName(R.raw.cow)
+                                                )
+                                                .appendPath(
+                                                        resources
+                                                                .getResourceEntryName(R.raw.cow)
+                                                )
+                                                .build()
+                                )
+                                prepare()
+                            }
+
+                    // getResources().openRawResourceFd(R.raw.cow).let {
+                    //     mediaPlayer.setDataSource(it.fileDescriptor)//, it.startOffset,
+                    // it.length)
+                    //     it.close()
+                    // }
+                    mediaPlayer.start()
+                },
+                shape = CircleShape
+        ) {
             Image(
                     painter = painterResource(id = R.drawable.cow),
                     contentDescription = "Cow",
